@@ -1,0 +1,12 @@
+void fib_sequence(int n) {
+  // Write your code here
+  long i=0,j=1,sum=0;
+  while(n>0)
+  {
+    cout<<sum<<endl;
+    i=j;
+    j=sum;
+    sum=i+j;
+    n--;
+  }
+}
