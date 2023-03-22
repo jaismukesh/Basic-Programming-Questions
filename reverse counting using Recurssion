@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+void PrintCount(int n){
+  //base case
+  if(n==0){
+    return;
+  }
+  //processing 
+  cout<<n<<" ";
+  //recursive call
+  PrintCount(n-1);
+}
+int main() {
+   int n;
+  cout<<"enter the size :"<<endl;
+  cin>>n;
+  cout<<endl;
+
+  PrintCount(n);
+}
