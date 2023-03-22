@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int  power(int a,int b){
+  int ans=1;
+  if(b==0){
+    return 1;
+  }
+  ans=a*power(a,b-1);
+  return ans;
+  
+  
+}
+int main() {
+   int a;
+  int b;
+  
+  cout<<"enter the number a :"<<endl;
+  cin>>a;
+  cout<<endl;
+  cout<<"enter the number b :"<<endl;
+  cin>>b;
+  cout<<endl;
+
+  cout<<power(a,b);
+
+}
