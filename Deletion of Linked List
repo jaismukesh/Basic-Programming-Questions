@@ -1,0 +1,119 @@
+#include <iostream>
+using namespace std;
+class Node{
+public:
+  int data;
+  Node *next;
+
+Node(int data){
+  this->data=data;
+  this->next=NULL;
+}
+
+ ~Node(){
+   cout<<"node with value "<<this->data<<" "<<"deleted"<<endl;
+ }
+};
+  
+//insert the node left side of the head node
+void insertAtHead(Node* &head,Node* &Tail,int data){
+    if(head==NULL){
+    Node* newNode= new Node(data);
+      head=newNode;
+      Tail=newNode;
+      return;
+  }
+  //step-1 create new node
+  Node* newNode= new Node(data);
+
+  //step-2 
+  newNode->next=head;
+
+  //step-3
+  head=newNode;
+}
+
+int findlength(Node* &head){
+  int len=0;
+  Node*temp=head;
+  while(temp!=NULL){
+    temp=temp->next;
+    len++;
+  }
+  return len;
+}
+ 
+void deleteNode(int position,Node* &head,Node* &Tail){
+  if(head==NULL){
+    cout<<"cannot ll is empty"<<endl;
+  }
+//deletion from the begining
+  if(position==1){
+    Node* temp=head;
+    head=head->next;
+    temp->next=NULL;
+    delete temp;
+    return;
+  }
+//deletion from the end
+  int len=findlength(head);
+  if(position==len){
+    //find pre
+    int i=1;
+    Node* pre=head;
+    while(i<position-1){
+      pre=pre->next;
+      i++;
+    }
+   pre->next=NULL;
+
+    Node*temp=Tail;
+    Tail=pre;
+    delete temp;
+    return;
+  }
+
+  //deletion from the given position
+
+  //step-1 find the pre and curr
+  int i=1;
+  Node*pre=head;
+  while(i<position-1){
+    pre=pre->next;
+    i++;
+}
+  Node*curr=pre->next;
+
+  //step 2:
+  pre->next=curr->next;
+  //step3:
+  curr->next=NULL;
+  //step-4:
+  delete curr;
+}
+void print(Node* &head){
+  Node* temp=head;
+  while(temp!=NULL){
+    cout<<temp->data<<" ";
+    temp=temp->next;
+  }
+}
+
+
+int main() {
+  Node*head=NULL;
+  Node*Tail=NULL;
+
+  //insert the node before the Head Node
+  insertAtHead(head,Tail,10);
+  insertAtHead(head,Tail,20);
+  insertAtHead(head,Tail,30);
+  insertAtHead(head,Tail,40);
+  print(head);
+  cout<<endl;
+
+  deleteNode(2,head,Tail);
+  cout<<endl;
+  print(head);
+  
+}
