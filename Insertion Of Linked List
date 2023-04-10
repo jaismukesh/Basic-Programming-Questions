@@ -1,0 +1,134 @@
+#include <iostream>
+using namespace std;
+class Node{
+public:
+  int data;
+  Node *next;
+
+Node(int data){
+  this->data=data;
+  this->next=NULL;
+}
+};
+
+//insert the node left side of the head node
+void insertAtHead(Node* &head,Node* &Tail,int data){
+    if(head==NULL){
+    Node* newNode= new Node(data);
+      head=newNode;
+      Tail=newNode;
+      return;
+  }
+  //step-1 create new node
+  Node* newNode= new Node(data);
+
+  //step-2 
+  newNode->next=head;
+
+  //step-3
+  head=newNode;
+}
+
+void insertAtTail(Node* &head,Node*&Tail,int data){
+  if(head==NULL){
+    Node* newNode= new Node(data);
+      head=newNode;
+      Tail=newNode;
+      return;
+  }
+
+  Node* newNode= new Node(data);
+
+  Tail->next=newNode;
+   newNode->next=NULL;
+}
+
+int findlength(Node* &head){
+  int len=0;
+  Node*temp=head;
+  while(temp!=NULL){
+    temp=temp->next;
+    len++;
+  }
+  return len;
+}
+
+//insert the node at a given position
+void insertAtposition(int data,int position,Node* &head,Node* &Tail){
+   if(head==NULL){
+    Node* newNode= new Node(data);
+      head=newNode;
+      Tail=newNode;
+      return;
+  }
+
+  //insert at 0th position
+  if(position==0){
+    insertAtHead(head,Tail,data);
+    return;
+  }
+
+  //insert at last position
+  int len=findlength(head);
+  if(position>=len){
+    insertAtTail(head,Tail,data);
+    return;
+  }
+
+  //step-1 find pre and curr element 
+
+  int i=1;
+  Node* pre=head;
+  while(i<position){
+    pre=pre->next;
+    i++;
+  }
+  Node* curr=pre->next;
+//step-2 create the newNode
+  Node* newNode=new Node(data);
+
+  //step-3 
+  newNode->next=curr;
+
+  //step-4
+  pre->next=newNode;
+}
+
+
+void print(Node* &head){
+  Node* temp=head;
+  while(temp!=NULL){
+    cout<<temp->data<<" ";
+    temp=temp->next;
+  }
+}
+
+
+int main() {
+  Node*head=NULL;
+  Node*Tail=NULL;
+
+  //insert the node before the Head Node
+  insertAtHead(head,Tail,10);
+  insertAtHead(head,Tail,20);
+  insertAtHead(head,Tail,30);
+  insertAtHead(head,Tail,40);
+ cout<<"insert The Linked List Elements before the Head : ";
+  cout<<endl;
+  print(head);
+  cout<<endl;
+  //insert the node after the Tail node
+  insertAtTail(head,Tail,70);
+  cout<<"insert The Linked List Elements after the Tail: ";
+  cout<<endl;
+  print(head);
+  cout<<endl;
+  
+
+  insertAtposition(101,2,head,Tail);
+  cout<<"insert the node at the given position:";
+  cout<<endl;
+  print(head);
+  cout<<endl;
+  
+}
