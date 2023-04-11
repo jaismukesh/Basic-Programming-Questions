@@ -1,0 +1,145 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+public:
+  int data;
+  Node*next;
+  Node*pre;
+
+  Node(){
+  this->data=0;
+  this->next=NULL;
+  this->pre=NULL;
+}
+  Node(int data){
+    this->data=data;
+    this->next=NULL;
+    this->pre=NULL;
+  }
+};
+
+void print(Node* &head){
+  Node*temp=head;
+  while(temp!=NULL){
+    cout<<temp->data<<" ";
+    temp=temp->next;
+  }
+}
+
+int getLength(Node* &head){
+  int len=0;
+  Node* temp=head;
+  while(temp!=NULL){
+    len++;
+  }
+  return len;
+}
+//inserting the LL elements in the Begining 
+void insertAtHead(Node*&head,Node* &Tail,int data){
+  //when LL is empty
+  if(head==NULL){
+  Node*newNode=new Node(data);
+     head=newNode;
+    Tail=newNode;
+    return;
+  }
+
+//when LL is not Empty
+  //step-1:Create the new node
+  Node* newNode= new Node(data);
+//step-2:
+  newNode->next=head;
+  //step-3:
+ head->pre=newNode->next;
+  //step-4:
+  head=newNode;
+}
+
+//inserting the LL elements in the end
+void insertAtTail(Node* &head,Node* &Tail,int data){
+  //if Linked list is empty
+  if(head==NULL){
+    Node*newNode=new Node(data);
+     head=newNode;
+     Tail=newNode;
+  }
+//linked list is not empty
+  Node*newNode=new Node(data);
+  Tail->next=newNode;
+  newNode->pre=Tail;
+ newNode->next=NULL;
+  }
+
+//insertion at the given Position
+void insertAtPosition(Node* &head,Node* &Tail,int data,int position){
+  if(head==NULL){
+    Node*newNode=new Node(data);
+     head=newNode;
+    Tail=newNode;
+  }
+
+ else{
+    if (position==1){
+    insertAtHead(head,Tail,data);
+    return;
+  }
+
+  int len=getLength(head);
+  if(position>len){
+    insertAtTail(head,Tail,data);
+    return;
+  }
+//insert at the middle
+//find curr and pre
+  int i=1;
+  Node*preNode=head;
+  while(i<position-1){
+    preNode=preNode->next;
+    i++;
+  }
+  Node* curr=preNode->next;
+
+  //step-2
+  Node*newNode=new Node(data);
+
+  //step-3
+ newNode -> pre = preNode;
+ preNode -> next = newNode;
+ newNode ->next = curr;
+ curr -> pre = newNode;
+}
+}
+int main() {
+  Node*first=new Node(10);
+  Node*second=new Node(20);
+  Node*third=new Node(30);
+  
+  //fixed the head and tail 
+  Node*head=first;
+  Node*Tail=third;
+
+  first->next=second;
+  second->pre=first;
+
+  second->next=third;
+  third->pre=second;
+ cout<<"linked list data element :"<<endl;
+  print(head);
+  cout<<endl;
+
+  insertAtHead(head,Tail,70);
+  cout<<"after Inserting The LL Elements:"<<endl;
+  print(head);
+  cout<<endl;
+
+  insertAtTail(head,Tail,501);
+  cout<<"after inserting At the end :"<<endl;
+  print(head);
+  cout<<endl;
+
+  insertAtPosition(head,Tail,121,3);
+  cout<<"after inserting At a given position :"<<endl;
+  print(head);
+  cout<<endl;
+}
