@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+public:
+  int data;
+  Node*next;
+
+  Node(int data){
+    this->data=data;
+    this->next=NULL;
+  }
+};
+
+Node* sort(Node * &head){
+  //creating the dummy node with zerohead
+  Node* ZeroHead=new Node(-1);
+  Node* ZeroTail=ZeroHead;
+
+  //creating the dummy node with onehead
+  Node* OneHead=new Node(-1);
+  Node* OneTail=OneHead;
+
+  //creating the dummy node with twohead
+  Node* TwoHead=new Node(-1);
+  Node* TwoTail=TwoHead;
+
+//traverse the original LL
+  Node* curr=head;
+  while(curr !=NULL){
+    if(curr->data==0){
+      //remove the zero wali node from original ll
+      Node*temp=curr;
+      curr=curr->next;
+      temp->next=NULL;
+    //connect the zero wali node from the dummy node
+      ZeroTail->next=temp;
+      ZeroTail=temp; 
+    }
+   else if(curr->data==1){
+      //remove the one wali node from original ll
+      Node*temp=curr;
+      curr=curr->next;
+      temp->next=NULL;
+    //connect the one wali node from the dummy node
+      OneTail->next=temp;
+      OneTail=temp;
+      
+    }
+    else if(curr->data==2){
+      //remove the two wali node from original ll
+      Node*temp=curr;
+      curr=curr->next;
+      temp->next=NULL;
+    //connect the two wali node from the dummy node
+      TwoTail->next=temp;
+      TwoTail=temp;
+      
+    }
+  }
+
+  //modify the onehead wali LL
+  Node*temp=OneHead;
+  OneHead=OneHead->next;
+  temp->next=NULL;
+  delete temp;
+
+  //modify the twohead walli LL
+  temp=TwoHead;
+  TwoHead=TwoHead->next;
+  temp->next=NULL;
+  delete temp;
+
+  //join list
+  if(OneHead !=NULL){
+    ZeroTail->next=OneHead;
+    if(TwoHead !=NULL){
+      OneTail->next=TwoHead;
+    }
+  }
+  else{
+    if(TwoHead != NULL){
+      ZeroTail->next=TwoHead;
+    } 
+  }
+  // modify the dummmy node of Zerohead wali LL
+  temp=ZeroHead;
+  ZeroHead=ZeroHead->next;
+  temp->next=NULL;
+    delete temp;
+
+  //return the starting node of the joining list
+  return ZeroHead;
+}
+
+void print(Node* &head){
+  Node*temp=head;
+  while(temp!=NULL){
+    cout<<temp->data<<" ";
+    temp=temp->next;
+  }
+}
+
+int main() {
+  Node*head=new Node(1);
+  Node*second=new Node(2);
+  Node*third=new Node(1);
+  Node* fourth=new Node(0);
+  Node* fifth=new Node(0);
+  Node* sixth=new Node(0);
+
+  head->next=second;
+  second->next=third;
+  third->next=fourth;
+  fourth->next=fifth;
+  fifth->next=sixth;
+  cout<<"Input"<<endl;
+  print(head);
+  cout<<endl;
+  head= sort(head);
+  cout<<"output"<<endl;
+  print(head);
+}
